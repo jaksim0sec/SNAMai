@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href = "https://ifh.cc/g/nN9xc5.png">
+  <title>성남.ai : 무엇이든 물어보세요</title>
+</head>
+<body>
+
+<style>
+*{
+  box-sizing:border-box;
+}
+
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.bigAlarm{
+  width:100vw;
+  height:100vh;
+  background:#00000040;
+  backdrop-filter: blur(2px);
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  top:0;left:0;
+  transition:all 0.5s ease;
+  font-size: 0.9rem;
+}
+
+.bigAlarm .title{font-size:1.2rem;margin-bottom: 10px;font-weight: 750;}
+
+.bigAlarm > div{
+  width: 80%;
+  max-width: 380px;
+  min-width: 285px;
+  height:fit-content;
+  max-height: 300px;
+  border-radius: 20px;
+  background-color: white;
+  padding: 20px;
+  position:relative;flex-direction: column;
+  display: flex;align-items: center;justify-content: center;
+}
+.bigAlarm div > div{opacity:0.8;margin-top:5px;}
+
+.bigAlarm > div > article{
+  width: 100%;display:flex;gap:4%;margin-top:30px;
+  justify-content: center;align-items: center;
+}
+
+.bigAlarm > div > article button{
+  width: 45%;border-radius: 100px;
+  padding:12px 25px !important;
+}
+
+textarea{
+  border:none;
+  outline:none;
+  font-size:0.9rem;
+  overflow:hidden;
+  background:transparent;
+}
+
+body{
+  font-size:16px;
+  letter-spacing:1.5px;
+  font-family: 나눔스퀘어;
+  margin:0;
+  padding:0;
+  width:100vw;
+  height:100vh;
+  background:#000000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow: hidden;
+}
+
+body > section{
+  width:100%;
+  height:100vh;
+  /*max-width:400px;*/
+  position:relative;
+  background:#f2f2f3;
+}
+
+header{
+  width:100%;
+  height:50px;
+  display:flex;
+  background:white;
+  border-color:transparent;
+}
+
+header{
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  /*border-bottom:1px solid;*/
+}
+
+#logo{
+  height: 75%;
+  margin-left: 15px;
+}
+
+#sideUp{
+  height: 50%;
+  margin-left: auto;
+  margin-right: 15px;
+  transition:all 0.5s ease;border-radius: 50%;
+}
+
+#sideUp:hover{
+  height: 70%;
+  padding:5px;
+  padding:5px;
+  margin-right: 10px;
+  background:#00000020;
+}
+
+aside {
+  width: 90%;
+  display: flex;
+  padding: 3.5px 5px;
+  height: fit-content;
+  align-items: center; 
+  min-height: 40px;
+  max-height: 200px;
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  z-index: 99999;
+  background: #FFFFFF;
+  border-radius: 25px;
+  transform: translateX(-50%);
+  box-shadow: 0 5px 8px #00000015, inset -2px -2px 2px #00000009;
+  /*border: 1px solid #eaeaeaAA;*/
+}
+
+aside textarea {
+  width: calc(100% - 60px);
+  height:30px;
+  min-height: 30px;
+  max-height: 120px;
+  padding: 5px 13px;
+  font-size: 0.82rem;
+  resize: none;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  background: transparent;
+  box-sizing: border-box;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+aside > div{
+  width: 40px;
+  aspect-ratio: 1;
+  padding: 5px;
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  margin-top:auto;
+}
+
+aside button {
+  width: 100%;
+  border:none;
+  padding: 0px;
+  aspect-ratio: 1;
+  border-radius:50%;
+  background:#000000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  transition:all 0.5s ease;
+}
+
+aside button:hover{
+  opacity: 0.6;
+}
+
+aside button img{
+  height:55%;
+  transform:rotate(90deg) scaleX(-1);
+  filter:invert(1);
+  margin-bottom:3px;
+}
+
+main{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y:scroll;
+  scrollbar-width: none;
+  padding-top: 75px;
+  padding-bottom: 200px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  -webkit-mask-image: linear-gradient(to bottom, black,black,black,black,black, transparent);
+  mask-image: linear-gradient(to bottom, black,black,black,black,black, transparent);
+  
+}
+
+main > section{
+  width: calc(90%);
+  height: fit-content;
+  display:flex;
+  margin: 10px;
+}
+
+main > section > div{ /*채팅패널*/
+  font-size: 0.85rem !important;
+  width: fit-content;
+  max-width: 80%;
+  height: fit-content;
+  min-height: 30px;
+  border:none;
+  padding: 12px 20px;
+  margin-top:15px;
+  background: #0000000B;
+  
+  /*box-shadow: 0 5px 8px #00000015, inset -2px -2px 2px #00000009;*/
+}
+
+@keyframes showChatL{
+  0%{transform: translate(-400px)}
+  100%{transform :none;}
+}
+
+@keyframes showChatR{
+  0%{transform: translate(400px)}
+  100%{transform :none;}
+}
+
+main > section > span { /*프로필이미지 커버*/
+  margin-bottom: auto;
+  margin: 5px;
+  margin-right: 15px;
+  width: 35px;
+  height: 35px;
+  /*aspect-ratio: 1;*/
+  border-radius: 50%;
+  background:white;
+  border:1px solid #00000020;
+  outline:none;
+  overflow:hidden;
+}
+
+main > section > span  > img{
+  width: 100%;
+  height: 100%;
+  display: none;
+
+}
+
+
+.me{
+  
+}
+
+.me > span{
+  margin-right: 5px !important;
+  margin-left: 15px;
+}
+
+aside textarea::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.loading {
+  animation: spin 0.8s linear infinite;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2.5px solid #dbdbdb;
+  border-top: 2.5px solid #0000008b;
+  margin: 5px;
+  aspect-ratio: 1;
+}
+.highB {
+  font-family: "42dot Sans", sans-serif !important;
+  color: white;
+  background-color: #2d2d2d;
+}
+.highB:hover {
+  color: white;
+  background-color: #2d2d2dc5;
+}
+.midB {
+  font-family: "42dot Sans", sans-serif !important;
+  color: #6e6e6e;
+  background-color: white;
+  border: 1.5px solid #00000015;
+}
+.midB:hover {
+  color: #000000bb;
+  background-color: #00000005;
+  border: 1.5px solid #d5d5d5;
+}
+button {
+  font-family: "42dot Sans", sans-serif !important;
+  padding: 7.5px 12.5px;
+  border: none;
+  font-weight: 800;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.5s ease;
+}
+
+#sideUpWindow{
+  width: 100vw;
+  height: calc(100vh - 50px);
+  position:fixed;
+  top:50px;left:0;
+  background:#00000010;
+  backdrop-filter:blur(2px);
+  z-index: 100000000;
+  display:none;
+}
+#sideUpWindow div{
+  width: 100%;
+  height: 100%;
+  position:relative;
+}
+
+.box{
+  padding: 5px 10px;
+  background: #00000010;
+  border-radius: 10px;
+  font-size: 0.9em;
+}
+
+</style>
+
+<section>
+<header>
+  <img src="https://ifh.cc/g/nN9xc5.png" id = "logo"/>
+  <span style = "margin-left:5px;font-weight:bold;">성남.ai</span>
+  <span style = "margin-left:5px;opacity:0.3;font-size:0.8em;font-weight:bold;height:100%;display:flex;align-items:center;padding-top:2.5px;"> : 진로 • 취업 • 정책 상담</span>
+  <img src="https://ifh.cc/g/8SYcDo.png" id = "sideUp" onclick = "aboutMe();">
+</header>
+<main>
+  
+</main>
+<aside>
+  <textarea placeholder="무엇이든 물어보세요" autofocus ></textarea>
+  <div><button><img src="https://ifh.cc/g/lNXYYf.png"/></button></div>
+</aside>
+</section>
+<div id = "sideUpWindow"></div>
+<div style = "position:absolute;bottom: 5px; opacity: 0.5; width: 100vw;display:flex;justify-content:center;font-size: 12px;">성남.ai 는 같은말을 반복할 수 있어요. 이점 양해 부탁드려요</div>
+<script>
+let EfetchWaiter = true
+let EfetchTimeWaiter = true;
+let username = '사용자'
+let context = '아직 맥락없음'
+let before = 'ai가 사용자에게 최초로, 인사 및 자기소개를 완료하고 열심히 답변하겠다함'
+//유틸리티
+const $ = (n) => document.querySelector(n);
+async function typeText(name, content, speed=30) {
+      const element = $(name);
+      if (!element) {
+        console.error(`${name}을 찾을 수 없습니다.`);
+        return;
+      }
+      const scroll = setInterval(()=>{scrollTo()},500)
+      let processedContent = '';
+      let index = 0;
+
+      while (index < content.length) {
+        const char = content[index];
+
+        if (char === '<') {
+          processedContent += char;
+          index++;
+          while (content[index] !== '>' && index < content.length) {
+            processedContent += content[index];
+            index++;
+          }
+          processedContent += '>';
+        } else {
+          processedContent += char;
+        }
+
+        element.innerHTML = processedContent + '●'; 
+        if (content[index] !== ' ') {
+          await new Promise((resolve) => setTimeout(resolve, speed));
+        }
+
+        index++;
+      }
+      element.innerHTML = processedContent;
+      return  clearInterval(scroll)
+    }
+
+
+async function Efetch(path, headers = {}, body = null, print = (typeof test !== 'undefined'?test:false), delay = 100) {
+await wait(()=>EfetchWaiter)
+if (!EfetchTimeWaiter) return clearInverval(scroll);
+EfetchWaiter = false;
+EfetchTimeWaiter = false;
+
+try {
+  const isPost = !!body;
+
+  if (isPost && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const res = await fetch('/' + path, {
+    method: isPost ? 'POST' : 'GET',
+    headers,
+    body: isPost ? JSON.stringify(body) : null,
+  });
+  if(res.status === 429)return alarm('워워, 조금 천천히 해주세요')
+
+  const data = await res.json();
+  if (print) console.log(`/${path} res:`, data);
+  return data;
+
+} catch (error) {
+  console.error(`/${path} res ERROR:`, error);
+  return null;
+} finally {
+  setTimeout(() => {
+    EfetchTimeWaiter = true;
+    EfetchWaiter = true;
+  }, delay);
+}
+}
+
+function wait(b) {
+return new Promise((resolve) => {
+  const check = () => {
+    if (b()) return resolve();
+    setTimeout(check, 30);
+  };
+  check();
+});
+}
+
+function scrollTo(){
+  document.querySelector('main').scrollTo({
+top: document.querySelector('main').scrollHeight,
+behavior: 'smooth'
+});
+}
+
+function random(min, max) {
+  const time = Date.now();
+  let seed = time ^ (time >> 3);
+  seed = (seed * 9301 + 49297) % 233280;
+  const randomValue = seed / 233280 + Math.random();
+  return Math.floor((randomValue % 1) * (max - min + 1)) + min;
+}
+
+function textEF(content) {
+  return content
+    .replace(/@[^@\s]{1,30}(?=\s|$)/g, m => `<span class='mention'>${m}</span>`)
+    .replace(/(https?:\/\/[^\s]+|www\.[^\s]+)/g, m => 
+      m.includes("i.ibb") ? m :
+      `<span><a href="${m}" ${m.includes(location.origin)?'':`target="_blank"`} class="link">${m}</a></span>`
+    )
+    .replace(/__(.+?)__/gs, (_, p1) => `<span style='text-decoration: underline;'>${p1}</span>`)
+    .replace(/\*\*([\s\S]*?)\*\*/g, (_, p1) => `<span style='font-weight:940;'>${p1}</span>`)
+    .replace(/~~([\s\S]*?)~~/g, (_, p1) => `<span style='text-decoration: line-through;'>${p1}</span>`)
+    .replace(/--([\s\S]*?)--/g, (_, p1) => `<span style='background-color:rgba(255,219,101,0.69);border-radius:5px;padding:2px;color:black;'>${p1}</span>`)
+    .replace(/#([\s\S]*?)#/g, (_, p1) => `<span style="font-size:1.3em;">${p1}</span>`)
+    .replaceAll("$br$", "<br>")
+    .replaceAll("$sp$", "");
+}
+
+
+let aiLimit = true;
+async function fetchAI(input, log) {
+  if (!aiLimit) return "timeLimit";
+  aiLimit = false;
+  let r = await Efetch('ai',undefined,{data:{content:input,context:context,before:before,username:username}},false)
+  aiLimit = true
+  return r;
+}
+
+function makeChat(content, who='ai', animate=true) {
+  const chat = document.createElement('section');
+  const id = 'chat-' + Date.now().toString(36);
+  const prof = `<span><img src="${who=='ai'?'https://ifh.cc/g/LQ0VPG.png':'https://ifh.cc/g/cdXtco.png'}" style="display:block;"/></span>`;
+  const bubble = `<div class="bubble" style="border-radius:${who==='ai'?'2px 20px 20px 20px':'20px 2px 20px 20px;margin-left:auto;'}">${textEF(content)}</div>`;
+  chat.innerHTML = who==='ai' ? `${prof}${bubble}` : `${bubble}${prof}`;
+  chat.className = who;
+  chat.id = id;
+  if (animate) chat.style.animation = `showChat${who==='ai'?'L':'R'} 1s ease`;
+  $('main').appendChild(chat);
+  scrollTo()
+  return id;
+}
+
+//modal Alarm
+function bigAlarm(content, buttons = ['확인', '취소'], callback = () => {}) {
+const id = Date.now().toString(36);
+if (typeof content !== 'object') content = ['', content];
+
+const close = () => {
+  const modal = document.getElementById(`al${id}`);
+  if (!modal) return;
+  const buttons = modal.querySelectorAll('button');
+  buttons.forEach(btn => btn.style.pointerEvents = 'none');
+  modal.style.opacity = '0';
+  setTimeout(() => modal.remove(), 500);
+};
+
+const modal = document.createElement('div');
+modal.className = 'bigAlarm';
+modal.id = `al${id}`;
+modal.innerHTML = `
+  <div>
+    ${content[0] ? `<div class="title">${textEF(content[0])}</div>` : ''}
+    <div${!content[0] ? ' style="font-size:1rem;opacity:1"' : ''}>${textEF(content[1])}</div>
+    <article>
+      <button class="highB" id="okBtn${id}">${textEF(buttons[0])}</button>
+      <button id="cancelBtn${id}">${textEF(buttons[1])}</button>
+    </article>
+  </div>`;
+
+modal.onclick = (e) => {
+  if (e.target === modal) document.getElementById(`cancelBtn${id}`).click();
+};
+modal.querySelector('div').onclick = (e) => e.stopPropagation();
+
+document.body.appendChild(modal);
+
+document.getElementById(`okBtn${id}`).onclick = () => {
+  close();
+  callback();
+};
+document.getElementById(`cancelBtn${id}`).onclick = close;
+}
+
+
+const Storage = {
+  setSession: (key, val) => sessionStorage.setItem(key, val),
+  getSession: (key) => sessionStorage.getItem(key),
+  setLocal: (key, val) => localStorage.setItem(key, val),
+  getLocal: (key) => localStorage.getItem(key)
+};
+
+//input
+let schools = {};
+
+function initTextarea() {
+  const ta = $('aside textarea');
+  const phList = [
+    '진로에 대해 궁금한 점을 입력해 주세요',
+    '성남에 적절한 직업, 진로를 물어봐요',
+    '어떤 진로가 맞을지 고민되시나요?',
+    '성남의 취업정보를 알아봐요',
+    
+    '성남시에 관해 물어보세요!',
+    '성남시는 노인분들을 어찌 지원할까요?',
+    '성남시의 초등학교 개수는?',
+    '성남시에 대해 궁금한 것이 있으신가요?',
+  ];
+  ta.placeholder = phList[random(0,phList.length-1)];
+
+  ta.addEventListener('input', () => {
+    ta.style.height = '30px';
+    ta.style.height = Math.min(ta.scrollHeight, 120) + 'px';
+  });
+
+  ta.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) e.preventDefault();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') $('div button').click();
+  });
+
+  $('div button').onclick = async () => {//채팅발생
+
+    let input = ta.value.trim();
+    if (!input) return;
+    makeChat(input, 'me');
+    let chat = makeChat('<div style = "width: 100%;display:flex;justify-content:center;"><div class="loading"></div></div><div  style = "width: 100%;display:flex;justify-content:center;"> 추가정보 조회중</div>');
+    ta.value = '';
+    ta.style.height = '30px';
+
+    // Efetch 호출 결과를 resData에 저장
+    let resData = await Efetch('ai', undefined, { data: { content: input, context: context, before: before, username: username } }, false);
+    // resData.r이 존재하는지 확인하고 res 변수에 할당
+    let res = resData && resData.r;
+
+    if (!res) {
+      // 응답이 없거나 유효하지 않은 경우 오류 메시지 표시
+      $(`#${chat} .bubble`).innerHTML = '죄송합니다. 응답을 받지 못했습니다.';
+      return;
+    }
+
+    let parsed;
+    try {
+      // ```json``` 등 마크다운 백틱 제거 후 파싱 시도
+      const cleanRes = res.replace(/```json\s*|```/g, '').trim();
+      parsed = JSON.parse(cleanRes);
+    } catch (e) {
+      // 파싱 실패 시, 원본 'res'를 응답으로 처리
+      console.error("AI 응답을 JSON으로 파싱하는 데 실패했습니다:", e);
+      // 'res'를 직접 응답으로 사용하고, 기존 'context'를 유지
+      parsed = { 응답: res, 맥락: context };
+    }
+
+    before = input;
+    // 파싱된 context가 있다면 사용하고, 없다면 기존 context 유지
+    context = parsed.맥락 || context;
+    // 파싱된 응답이 있다면 사용하고, 없다면 원본 'res'를 사용
+    let answer = parsed.응답 || res;
+    answer = textEF(answer); // 텍스트 효과 적용
+
+    const schoolNameRegex = /[^\s~`!@#$%^&*()\-_=+\[\]{}\\|;:'",.<>/?]{2,}(고등학교|중학교|초등학교|대학교|대학)/g;
+
+    const matchedSchools = Array.from(new Set(
+      (answer.match(schoolNameRegex) || []).map(s => s.trim())
+    ));
+
+    console.log('학교명:', matchedSchools);
+
+    if (matchedSchools.length > 0) {
+      $(`#${chat} .bubble`).innerHTML = '<div style = "width: 100%;display:flex;justify-content:center;"><div class="loading"></div></div><div  style = "width: 100%;display:flex;justify-content:center;"> 추가정보 조회중</div>';
+      try {
+        const schoolRes = await Efetch('school', {}, { schools: matchedSchools }, false);
+
+        if (schoolRes && schoolRes.r) {
+          matchedSchools.forEach(school => {
+            if (school !== '과학고등학교') {
+              console.log(schools, schoolRes.r, school)
+              schools[school] = schoolRes.r[school];
+              const replaced = `<span style="color:blue;font-weight:bold" onclick="ss('${school}')" class = "schoolShow">${school}</span>`;
+              answer = answer.replaceAll(`%${school}%`, replaced);
+            }
+          });
+        }
+      } catch (e) {
+        console.error('학교정보 조회 오류:', e);
+      }
+
+      if(answer.includes('schoolShow')) answer += `<br><br>학교 이름을 클릭하시면 더 정확한 정보를 제공해드릴께요!`
+    }
+
+    $(`#${chat} .bubble`).innerHTML = '';
+    await typeText(`#${chat}.ai .bubble`, answer.replaceAll('%','').replaceAll('\\n','<br>').replaceAll('\n','<br>'));
+    scrollTo();
+  }
+}
+
+// ... (나머지 코드)
+//초기실행
+document.addEventListener('DOMContentLoaded', () => {
+    if (!Storage.getSession('newPage')) {
+      bigAlarm(['안녕하세요', '**성남.ai** 는 **중앙고등학교** 학생팀으로부터 개발된 페이지 입니다.$br$$br$따라서 아직 다양한 방면에서 부족할 수 있음 양해 부탁드립니다.']);
+      Storage.setSession('newPage', false);
+    }
+  
+    makeChat(`안녕하세요! 저는 성남시 시민들을 위하여 만들어진 **성남.ai** 입니다!😄<br> 성남시에 관한 질문이나 진로/취업에 관련된 굼금증을 편하게 말씀해주세요! 당신에게 조금이라도 도움이 될 수 있는 답변을 드리겠습니다! $br$$br$ <div style = "color:blue" onclick = '$("#sideUp").click()'>개발자에 대하여</div>`, undefined, false);
+    makeChat(`자주 하는 질문 <br> 
+    <br><div class = "box" onclick = "$('textarea').value += this.innerText">나는 중학생인데, 과학 중점 학교는 어디어디가 있을까?</div>
+    <br><div class = "box" onclick = "$('textarea').value += this.innerText">나는 고등학생인데, 우리 지역에 나의 진로에 맞는 일자리가 있을까?</div>
+    <br><div class = "box" onclick = "$('textarea').value += this.innerText">나는 성인이야. 혹시 우리 지역에 내 분야에 맞는 일자이가 있을까?</div>
+    <br><div class = "box" onclick = "$('textarea').value += this.innerText">우리지역에는 무슨 초등학교가 있을까?</div>
+    <br><div class = "box" onclick = "$('textarea').value += this.innerText">성남시의 유명한 기업 목록을 알려줘</div>
+    `, undefined, false);
+    
+    initTextarea();
+  });
+
+function useSchoolInfo(obj){
+let orgObj = obj
+obj = schools[obj.replaceAll('$sp$','')]
+if (obj == null) return orgObj
+let r = '';
+r+=`#${insertSpAt(obj.SCHUL_NM)}#$br$$br$`;
+r+=`**소속 교육청 : ** ${obj.ATPT_OFCDC_SC_NM||'정보없음'}$br$`;
+r+=`**공학 여부 : ** ${obj.COEDU_SC_NM||'정보없음'}$br$`;
+r+=`**학교 유형 : ** ${obj.FOND_SC_NM||'정보없음'}$br$`;
+r+=`**학교 종류 : ** ${obj.HS_SC_NM||'정보없음'}$br$$br$`;
+r+=`**문의 전화 : ** ${obj.ORG_TELNO||'정보없음'}$br$`;
+r+=`**홈페이지 : ** ${obj.HMPG_ADRES||'정보없음'}$br$`;
+return r;
+}
+
+function insertSpAt(str) {
+  const pos = Math.floor(Math.random() * (str.length));
+  return str.slice(0, pos) + '$sp$' + str.slice(pos);
+}
+
+function ss(s){
+  makeChat(`더욱 정확한 학교 정보를 알아봤어요 : $br$ ${useSchoolInfo(s)}`)
+}
+
+function aboutMe(){
+  makeChat(`
+  #중앙고등학교 1학년 9반 학생팀#$br$$br$
+  **자료조사 및 계획** : $br$__10913김대은__$br$__10923이준우__$br$$br$
+  **플랫폼 개발** : $br$__10923이준우__$br$
+  (모든 코드 및 이미지를 만들고 플랫폼을 구축함)$br$$br$
+  --성남.ai-- 는 **제미나이 API**를 기반으로 작동하는 ai 플랫폼입니다.$br$
+  일정한 정제를 통하여 제미나이의 응답을 조정하고, 해당 응답과 외부 정보를 조합하여$br$
+  사용자에게 성남시에 관한 상담을 진행하는 것을 목적을 하고 있습니다.
+  `)
+}
+</script>
+
+</body>
+</html>
+
+<!--
+// 나이스 API 인증키를 반환하는 함수 (원본 코드의 로직 유지)
+function getNeisApiKey() {
+  const $miz = { '$3$dlf': 0, '$3$dl': 1, '$3$tka': 2 };
+  const $mizep = [0, 1, 2];
+  const $fsts = ['b7bd', 'c46321', '98429696a'];
+  return (
+    $fsts[$miz[Object.keys($miz)[$mizep[0]]]] +
+    $fsts[$miz[Object.keys($miz)[$mizep[1]]]] +
+    $fsts[$miz[Object.keys($miz)[$mizep[2]]]] +
+    'ab2a82ce6087c'
+  );
+}
+
+/**
+ * 나이스 API를 호출하여 학교 기본 정보를 조회합니다.
+ * @param {string} schoolName 조회할 학교의 전체 명칭
+ * @returns {Promise<Object|null>} 학교 상세 정보 객체 (API 응답의 모든 필드 포함) 또는 null (학교를 찾을 수 없거나 오류 발생 시)
+ */
+async function fetchSchoolInfo(schoolName) {
+  const apiKey = getNeisApiKey();
+  const apiUrl = `https://open.neis.go.kr/hub/schoolInfo`;
+  const params = new URLSearchParams({
+    KEY: apiKey,
+    Type: 'json',
+    pIndex: 1, // 첫 페이지
+    pSize: 10,  // 최대 10개 결과 (동명이교 가능성 고려)
+    SCHUL_NM: schoolName,
+  });
+
+  try {
+    const response = await fetch(`${apiUrl}?${params.toString()}`);
+    const data = await response.json();
+
+    if (data.RESULT) {
+      console.warn(`학교 정보 검색 실패: ${data.RESULT.MESSAGE}`);
+      return null;
+    }
+
+    // schoolInfo[1].row 배열에서 첫 번째 학교 데이터를 그대로 반환
+    // 모든 필드를 포함하여 반환합니다.
+    return data.schoolInfo[1].row[0];
+
+  } catch (error) {
+    console.error('학교 정보 API 요청 중 오류 발생:', error);
+    return null;
+  }
+}
+
+/**
+ * 학교 정보를 콘솔에 보기 좋게 출력하는 헬퍼 함수
+ * @param {Object} schoolData 나이스 API로부터 받은 학교 상세 정보 객체
+ */
+function displaySchoolDetails(schoolData) {
+  if (!schoolData) {
+    console.log("표시할 학교 정보가 없습니다.");
+    return;
+  }
+
+  console.log(`\n--- ${schoolData.SCHUL_NM} 상세 정보 ---`);
+
+  // 객체의 모든 키-값을 순회하며 출력 (값이 존재할 때만)
+  for (const key in schoolData) {
+    // 특정 필드명은 더 사용자 친화적으로 변환
+    let displayKey = key;
+    switch (key) {
+      case 'ATPT_OFCDC_SC_CODE': displayKey = '시도교육청 코드'; break;
+      case 'ATPT_OFCDC_SC_NM': displayKey = '시도교육청 명칭'; break;
+      case 'SD_SCHUL_CODE': displayKey = '표준학교 코드'; break;
+      case 'SCHUL_NM': displayKey = '학교 명칭'; break;
+      case 'ENG_SCHUL_NM': displayKey = '영문 학교 명칭'; break;
+      case 'SCHUL_KND_SC_NM': displayKey = '학교 종류'; break;
+      case 'LCTN_SC_NM': displayKey = '설립 구분'; break;
+      case 'HS_GNRL_BUSNS_SC_NM': displayKey = '고등학교 일반/특성화'; break;
+      case 'HS_SPSCL_CUL_DIV_NM': displayKey = '고등학교 특목/특성화 계열'; break;
+      case 'HS_SC_NM': displayKey = '고등학교 유형'; break;
+      case 'INDST_SPECL_CCCCL_DIV_NM': displayKey = '산업체 특수학급'; break;
+      case 'DGHT_SC_NM': displayKey = '주야 구분'; break;
+      case 'FOND_SC_NM': displayKey = '설립 유형'; break;
+      case 'ORG_RDNMA': displayKey = '도로명 주소'; break;
+      case 'ORG_RDNZC': displayKey = '도로명 우편번호'; break;
+      case 'ORG_TELNO': displayKey = '전화번호'; break;
+      case 'ORG_FAXNO': displayKey = '팩스번호'; break;
+      case 'HPG_ADRES': displayKey = '홈페이지 주소'; break;
+      case 'COEDU_SC_NM': displayKey = '남녀공학 여부'; break;
+      case 'FOND_YMD': displayKey = '개교 기념일'; break;
+      case 'FOAS_MEMO': displayKey = '개교 기념일 비고'; break;
+      case 'LOAD_DTM': displayKey = '자료 기준일자'; break;
+    }
+
+    const value = schoolData[key];
+    if (value !== undefined && value !== null && value !== '') { // 값이 있을 때만 출력
+      console.log(`  ${displayKey}: ${value}`);
+    }
+  }
+  console.log('---------------------------------');
+}
+
+
+/**
+ * 사용자로부터 학교 명칭을 입력받아 정보를 조회하고 출력하는 함수
+ */
+async function getSchoolInfoFromUserInput() {
+  const schoolName = prompt('학교 이름을 입력해주세요:');
+
+  if (!schoolName) {
+    alert('학교 이름이 입력되지 않았습니다.');
+    return;
+  }
+
+  console.log(`"${schoolName}" 학교 정보를 조회 중입니다...`);
+  const schoolInfo = await fetchSchoolInfo(schoolName);
+
+  if (schoolInfo) {
+    displaySchoolDetails(schoolInfo); // 새로운 헬퍼 함수를 사용하여 출력
+  } else {
+    alert(`"${schoolName}" 학교를 찾을 수 없거나 정보를 가져오는 데 실패했습니다.\n정확한 학교 전체 명칭(예: "분당중앙고등학교")을 입력했는지 확인해주세요.`);
+    console.error(`"${schoolName}" 학교 정보를 찾을 수 없습니다.`);
+  }
+}
+
+// 함수 호출: 웹 페이지 로드 시 또는 특정 이벤트 발생 시 호출
+getSchoolInfoFromUserInput();
+
+
+-->
