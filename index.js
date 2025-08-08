@@ -144,6 +144,19 @@ app.post('/school', async (req, res) => {
   res.status(200).json({ r: result });
 });
 
+app.get("/a", (req, res) => {
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+      <meta charset="UTF-8">
+      <title>빈 페이지</title>
+    </head>
+    <body>
+    </body>
+    </html>
+  `);
+});
 
 app.listen(PORT, () => {
   console.log(`대한민국 서버 포트 ${PORT} 에서 실행중`);
