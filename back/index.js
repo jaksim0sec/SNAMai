@@ -1,16 +1,25 @@
+//잡다한 모듈 선언하기
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const app = express();
 const PORT = 3000;
 
+//환경정리
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+//정적파일 
+app.use(express.static(path.join(__dirname, "..")));
+
+//기본라우팅
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+res.sendFile(path.resolve(__dirname, "../front/index.html"));
 });
+
+
 
 // 기존 AI 응답 API
 app.post('/ai', async (req, res) => {
@@ -86,12 +95,14 @@ app.post('/ai', async (req, res) => {
   }
 });
 
+//서버 메트릭스 돈아까워서 만든거
 const schoolData = {
   // 예시: "낙생고등학교": { ...학교정보객체 }
 };
 
+//학교정보 가져오는거
 async function fetchSchoolInfo(schoolName) {
-  const apiKey = 'b7bdc4632198429696aab2a82ce6087c';
+  const apiKey = 'b7bdc4632198429696aab2a82ce6087c'; //토큰임 ㅋㅋ
   const apiUrl = `https://open.neis.go.kr/hub/schoolInfo`;
   const params = new URLSearchParams({
     KEY: apiKey,
@@ -120,6 +131,7 @@ async function fetchSchoolInfo(schoolName) {
   }
 }
 
+//학교조회하기
 app.post('/school', async (req, res) => {
   if (!req.body || !Array.isArray(req.body.schools)) {
     return res.status(400).json({ r: "no_schools" });
@@ -144,6 +156,7 @@ app.post('/school', async (req, res) => {
   res.status(200).json({ r: result });
 });
 
+//외부CRON을 이용하여 서버 지속적으로 켜놓기
 app.get("/a", (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -158,6 +171,8 @@ app.get("/a", (req, res) => {
   `);
 });
 
+
+//서버실행하기
 app.listen(PORT, () => {
   console.log(`대한민국 서버 포트 ${PORT} 에서 실행중`);
 });
