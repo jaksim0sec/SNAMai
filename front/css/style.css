@@ -153,11 +153,11 @@ aside {
   left: 50%;
   bottom: 25px;
   z-index: 99999;
-  background: #FFFFFF7C;
+  background: #FFFFFF80;
   border-radius: 25px;
   transform: translateX(-50%);
-  box-shadow: 0 5px 8px #00000015, inset -2px -2px 2px #0000000C;
-  backdrop-filter: blur(6px);
+  box-shadow: 0 5px 8px #00000019, inset -2px -2px 2px #0000000C;
+  backdrop-filter: blur(15px);
   /*border: 1px solid #eaeaeaAA;*/
 }
 
